@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.lab04.contactsmanager;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.provider.ContactsContract;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -91,10 +93,12 @@ public class ContactsManagerActivity extends AppCompatActivity {
                         contactData.add(imRow);
                     }
                     intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, contactData);
-                    startActivity(intent);
+//                    startActivity(intent);
+                    startActivityForResult(intent, Constants.CONTACTS_MANAGER_REQUEST_CODE);
                     break;
 
                 case R.id.cancel_button:
+                    setResult(Activity.RESULT_CANCELED, new Intent());
                     finish();
                     break;
             }
@@ -123,8 +127,25 @@ public class ContactsManagerActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(buttonClickListener);
 
         additionalFieldsContainer = (LinearLayout)findViewById(R.id.additional_fields_container);
+        Intent intent = getIntent();
+        if (intent != null) {
+            String phone = intent.getStringExtra("ro.pub.cs.systems.eim.lab04.contactsmanager.PHONE_NUMBER_KEY");
+            if (phone != null) {
+                phoneEditText.setText(phone);
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.phone_error), Toast.LENGTH_LONG).show();
+            }
+        }
 
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch(requestCode) {
+            case Constants.CONTACTS_MANAGER_REQUEST_CODE:
+                setResult(resultCode, new Intent());
+                finish();
+                break;
+        }
+    }
 }

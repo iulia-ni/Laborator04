@@ -12,4 +12,5 @@
     <string name="website">Website</string>
     <string name="im">IM</string>
     <string name="hide_additional_details">Hide Additional Details</string>
+    <string name="phone_error">Phone number is empty!</string>
 </resources>
