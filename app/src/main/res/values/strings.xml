@@ -11,4 +11,5 @@
     <string name="company_name">Company Name</string>
     <string name="website">Website</string>
     <string name="im">IM</string>
+    <string name="hide_additional_details">Hide Additional Details</string>
 </resources>
